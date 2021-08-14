@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <script src="js/quan.min.js"></script>
+  <style>
+    .chart--container {
+      min-height: 0px;
+      width: 330px;
+      height: 320px;
+    }
+
+    .zc-ref {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <center><div id="myChart" class="chart--container"></center>
+  </div>
+  <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    let chartConfig = {
+      type: 'ring',
+	  backgroundColor:'white',
+      legend: {
+        align: 'center',
+		backgroundColor:'white',
+        borderWidth: '0px',
+        item: {
+          cursor: 'pointer',
+          fontSize: '9px',
+		 
+          offsetX: '-1px'
+        },
+        layout: 'vertical',
+        marker: {
+          type: 'circle',
+          cursor: 'pointer',
+          size: '6px'
+        },
+        toggleAction: 'remove', // remove plot so it re-calculates percentage
+        verticalAlign: 'middle'
+      },
+      plot: {
+        detached: false, // turn off click on slices
+        slice: 78 // set hole size in middle of chart
+      },
+      tooltip: {
+        visible: false
+      },
+     series: [{
+          values: [90],
+		  text: 'Hydrology',
+          backgroundColor: '#87CEFA'
+        },
+        {
+          values: [85],
+		  text: 'Climate Change',
+          backgroundColor: '#D2B48C'
+        },
+        {
+          values: [95],
+		  text: 'Modelling',
+          backgroundColor: '#FFDAB9'
+        },
+        {
+          values: [70],
+		  text: 'Optimisation',
+          backgroundColor: '#DDA0DD'
+        }
+      ]
+    };
+
+    zingchart.render({
+      id: 'myChart',
+      data: chartConfig,
+      height: '100%',
+      width: '100%',
+    });
+
+    /*
+     * Every 35 milliseconds we will update the chart
+     * angle by 1.5 degress so it simulates rotatition
+     * animation! 
+     */
+    let angle = 0;
+    setInterval(function() {
+      angle = angle + 1.5;
+      zingchart.exec('myChart', 'modify', {
+        object: 'plot',
+        data: {
+          refAngle: angle % 360
+        }
+      });
+    }, 35);
+  </script>
+</body>
+
+</html>
